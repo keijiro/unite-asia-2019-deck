@@ -121,6 +121,10 @@ body.print-mode div.sub-container {
   page-break-after: always;
 }
 
+ul {
+    padding-left: 1em;
+}
+
 ul.notes-list {
   display: inline-block;
   float: left;
