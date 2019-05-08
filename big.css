@@ -133,6 +133,7 @@ ul.notes-list {
 
 body.print-mode div.slide-container {
   border: 1px solid #000;
+  box-shadow: inset 0 0 0 1000px #808080;
 }
 
 body.jump-mode {
