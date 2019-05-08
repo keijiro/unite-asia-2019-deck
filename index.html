@@ -15,34 +15,76 @@
 </head>
 <body class='dark'>
 
-<div>Getting artistic inspiration from technology</div>
+<div>
+Getting artistic inspiration from technology
+</div>
 
-<div></div>
+<div>
+<notes>お話を始める前に、今お見せしたデモンストレーションについて、ざっと簡単に解説しておきましょう。</notes>
+</div>
 
-<div><ul>
+<div>
+<ul>
 <li>RealSense Depth Camera</li>
 <li>Visual Effect Graph (VFX Graph)</li>
-</ul></div>
+</ul>
+<notes>今回のこのデモでは、２つの技術を使いました。ひとつは Intel の RealSense カメラ、もうひとつは Unity の新機能 Visual Effect Graph、通称 VFX Graph です。</notes>
+<notes>RealSense カメラは、この三脚の上にある、これですね。このデバイスは、いわゆるデプスカメラと言うやつで、カメラから見た絵の色情報だけでなく、カメラからの距離の情報、デプスも取得できるというものです。</notes>
+</div>
 
-<div></div>
+<div>
+<notes>ちょっとツールを立ち上げましょう。これは RealSense SDK に付属のツールですが……このように普通に平面の絵が撮れるだけでなく……このように奥行きを持った３Ｄのボリュームデータとして映像を取得できます。精度は完璧ではありませんが、こんなに小さなデバイスで簡単に３Ｄのボリュームデータが取れるため、とても重宝しています。</notes>
+<notes>そして、もうひとつの技術、  VFX Graph ですが、これは現在開発中の、 Unity の新しいエフェクトシステムです。ちょっと立ち上げてみましょう。</notes>
+<notes>これが VFX Graph を編集するためのツール、 VFX Editor の画面です。こんな感じで、ノードを線で繋いでいき、グラフを構築することでエフェクトをデザインできます。こうして作られたエフェクトは GPU を使って実行されるため、パフォーマンスも非常に優れています。従来のパーティクルシステムと比較して、使いやすいだけでなく性能も良いという優れものです。</notes>
+<notes>今回新たに作ったのは、この RealSense から得た３Ｄのボリュームデータを VFX Graph に入力するための仕組みです。どのように実現しているのか、簡単に説明します。</notes>
+</div>
 
-<div><img src="img/rsvfx-1.png" /></div>
+<div>
+<img src="img/rsvfx-1.png" />
+<notes>VFX Graph には、テクスチャに焼き込まれた、いわゆる「ベイク」された、位置や色の情報を適用するためのノードが用意されています。この “Set Position from Map” や “Set Color from Map” がそれです。この仕組みを使うことで、大量の位置や色の情報を、テクスチャ、いわゆるアトリビュートマップを経由して、エフェクトで使うことができるわけです。</notes>
+</div>
 
-<div><img src="img/rsvfx-2.png" /></div>
+<div>
+<img src="img/rsvfx-2.png" />
+<notes>そこで今回僕は、この RealSense から取得したポイントクラウドの色情報と位置情報を、リアルタイムにテクスチャにベイクする仕組みを作りました。一度テクスチャにベイクしてしまえば、あとは VFX Graph に内蔵の仕組みで簡単に扱うことができます。</notes>
+</div>
 
-<div><a href="https://github.com/keijiro/Rsvfx">github.com/keijiro/Rsvfx</a></div>
+<div>
+<a href="https://github.com/keijiro/Rsvfx">github.com/keijiro/Rsvfx</a>
+<notes>この仕組みを使ったサンプルプロジェクトを、こちらの GitHub のリポジトリで公開していますので、詳細について興味のある場合は、こちらを参照してみてください</notes>
+<notes>ちょっと実際に動かしてみましょう。</notes>
+<notes>試しに作ってみたエフェクトが色々入ってるんですが……こんな感じでパーティクルを発生させたり……こんな感じでラインを発生させたり……いろんなエフェクトを簡単に組むことができます。ぜひ試してみてください。</notes>
+</div>
 
-<div><img src="img/rsvfx-2.png" /></div>
+<div>
+<img src="img/rsvfx-2.png" />
+<notes>このように今回は、 RealSense から取り込んだ色や位置の情報をテクスチャに焼き込んで VFX Graph に取り込むという仕組みを作ったわけですが、このアプローチは RealSense 以外でも使うことができると思っています。</notes>
+</div>
 
-<div><img src="img/rsvfx-3.png" /></div>
+<div>
+<img src="img/rsvfx-3.png" />
+<notes>例えば……サーモグラフィーを使って温度の情報を取り込んで VFX Graph で視覚化する、なんて面白そうですね。あるいは気象情報を取り込んで視覚化するなんてのもいいかもしれません。人口密度などの地図情報の視覚化なんかも面白そうです。などなど。</notes>
+</div>
 
-<div>Data visualization</div>
+<div>
+Data visualization
+<notes>とにかく何でも、大量のデータを Unity に取り込んで視覚化、いわゆるデータ・ビジュアライゼーションを行いたいという場合に、このアプローチは役に立ちます。エフェクトアーティストだけでなく、データの視覚化に Unity を使いたいと考えてる人にも、この VFX Graph は、ぜひ使ってみて欲しい機能だと思います。</notes>
+</div>
 
-<div></div>
+<div>
+<notes>もう一つ、今回のデモで使っていた要素があります。それは「音」です。</notes>
+<notes>この三脚の上にマイクが付いていますよね。このマイクは Unity に音を取り込むために使っています。ちょっと試してみましょうか……こんな風に、音の強弱によってエフェクトの強さが変化するようになっているわけです。</notes>
+<notes>このように、音に連動したエフェクトが存在することによって、音と映像の一体感が作り出されています。この一体感を実現するには、音と映像の間に発生する遅延を最小限に抑える必要があります。音と映像がズレていたら、一体感は生じませんからね。これを Unity の標準機能だけで実現するのは難しかったため、専用のプラグインを作成しました。</notes>
+</div>
 
-<div><a href="https://github.com/keijiro/Lasp">github.com/keijiro/Lasp</a></div>
+<div>
+<a href="https://github.com/keijiro/Lasp">github.com/keijiro/Lasp</a>
+<notes>このプラグインは、こちらの GitHub のリポジトリで公開していますので、興味のある方はこちらを覗いてみてください。</notes>
+</div>
 
-<div></div>
+<div>
+<notes>これらの技術を使って今回お見せしたようなビジュアルを作り出しているのですが、実際にはこれらのエフェクトをリアルタイムに制御できるようにしておく必要があります。特に今回のようにミュージシャンが生演奏する場合、生演奏の進行に合わせて手動で制御していくことが非常に重要になります。</notes>
+</div>
 
 <div style="text-align: center">
 <img src="img/blank.png" />
@@ -51,6 +93,14 @@
 <img src="img/controller-3.jpg" style="width:45%" />
 <img src="img/controller-4.jpg" style="width:45%" />
 <img src="img/blank.png" />
+<notes>制御のためのコントローラーにはいろんな種類があります。まあ一番基本的なのはキーボードとマウスですね。こういうゲームパッドを使うという手もありますが、ゲームパッドは意外とボタンが少ないので、僕はあんまり使いません。代わりに MIDI コントローラーという、元は音楽制作に使うデバイスなのですが、こういうボタンやノブやスライダーがたくさん付いたデバイスを使うことがあります。</notes>
+<notes>ただ、これだけたくさん操作する要素があると、どれに何の機能が割り当てられているのか覚えるのが難しくなってしまうという悩みもあります。また、手元を見ないと操作できないので、画面を見ながら操作するのが難しくなってしまう、という弱点もあります。</notes>
+<notes>これらの問題を解決するために、僕はタッチスクリーンを使ったインターフェースをよく使うようになりました。今日のパフォーマンスでもタッチスクリーンを使っています。</notes>
+</div>
+
+<div>
+<notes>ちょっとカメラを使って実際の手元の様子をお見せしましょう。</notes>
+<notes>ここにあるのは、マルチタッチ入力が可能なタッチスクリーンディスプレイです。ここに並べてあるボタンやノブを操作することによってエフェクトの制御ができます。また、ここには現在流れている映像も表示されているので、映像の確認と操作を同時に行うことができます。これで視線を動かさなくても済むわけですね。</notes>
 </div>
 
 <div style="text-align: center">
@@ -58,23 +108,42 @@
 <img src="img/vjui-1.gif" style="width:45%" />
 <img src="img/vjui-2.gif" style="width:45%" />
 <img src="img/blank.png" />
+<notes>今日のデモは比較的簡単なインターフェースにまとまっていますが、実際にはもっと沢山の部品を並べてインターフェースを構築することになります。こんな感じで画面を埋め尽くしてしまうことも珍しくないですね。</notes>
+<notes>ちなみに、これらのノブやボタンなどの部品は、タッチスクリーン上で操作しやすいようにカスタムで設計したものです。</notes>
 </div>
 
-<div><a href="https://github.com/keijiro/VJUI">github.com/keijiro/VJUI</a></div>
+<div>
+<a href="https://github.com/keijiro/VJUI">github.com/keijiro/VJUI</a>
+<notes>こちらの GitHub のリポジトリで公開していますので、興味のある方はこちらを覗いてみてください。</notes>
+</div>
 
-<div></div>
+<div>
+<ul><li>Intel RealSense D415</li><li>GeChic On-Lap 1503I</li></ul>
+<notes>ちなみに、今回使っていたデバイスの型番を参考までに紹介しておきます。 RealSense カメラは D415 というモデルです。 FOV (Field Of View) が狭いのですが、そのぶん画質は他のモデルよりも高めになっています。なので今回のようなビジュアルエフェクトに使うには、これがおすすめです。タッチスクリーンは GeChic の On-Lap 1503I です。軽くて持ち運びやすいので重宝しています。</notes>
+</div>
 
-<div><ul><li>Intel RealSense D415</li><li>GeChic On-Lap 1503I</li></ul></div>
+<div>
+<notes>デモンストレーションについての解説は以上です。そろそろ本題に入りましょう。まずは自己紹介から。</notes>
+</div>
 
-<div></div>
+<div>
+<p>Keijiro Takahashi</p>
+<notes>僕の名前は高橋啓治郎です。 Unity Technologies Japan でエバンジェリストをやっています。元はコンソールゲーム業界の人間で、ソニーで１０年間、プレイステーション用のゲームを作るゲームプログラマーとして働いていました。ずっとゲームを作る仕事をしていた反動なのか、 Unity 社に入ってからは、ゲーム以外のプロジェクトに多く関わっています。仕事で関わることもあれば、個人活動として関わることもあったり、とにかく様々なかたちで Unity を使い続けています。</notes>
+</div>
 
-<div><p>Keijiro Takahashi</p></div>
+<div>
+<video src="video/tumblr-archive.mp4" controls autoplay loop />
+<notes>これは僕の日々の活動をアーカイブとしてまとめたものですが……こんな感じで日々映像を作ったり、実験をしてみたりしては、その結果を SNS で共有する、というようなことを繰り返しています。こうして作ったものの一部が、会社の仕事に結びついたり、個人として引き受けた仕事のプロジェクトに結びついたりしています。</notes>
+</div>
 
-<div><video src="video/tumblr-archive.mp4" controls autoplay loop /></div>
+<div>
+<img src="img/github-profile.png" />
+<notes>また、こうした作ってきたプロジェクトのほぼすべてを GitHub 上で公開しています。現在 500 個ぐらいのプロジェクトがこの上で公開されています。時間に余裕のあるときに覗いてみてください。</notes>
+</div>
 
-<div><img src="img/github-profile.png" /></div>
-
-<div></div>
+<div>
+<notes>それでは、いくつかの面白いプロジェクトを紹介してみたいと思います。</notes>
+</div>
 
 <div style="text-align: center">
 <img src="img/blank.png" />
@@ -83,6 +152,7 @@
 <img src="img/dmm-vr-3.gif" style="width:45%" />
 <img src="img/dmm-vr-4.gif" style="width:45%" />
 <img src="img/blank.png" />
+<notes>これは DMM VR Theater という施設でパフォーマンスしたときの映像です。いわゆる pepper’s ghost illusion と呼ばれるトリックを使って、ホログラムのように宙に浮かぶ映像を作り出しています。下のは OBA というダンサーさんとのコラボレーションでパフォーマンスを行ったときのものですね。こういう風に、実在の演者と CG との融合を見せることのできる、とても面白い施設です。</notes>
 </div>
 
 <div style="text-align: center">
@@ -92,6 +162,7 @@
 <img src="img/merzbow-3.gif" style="width:45%" />
 <img src="img/merzbow-4.gif" style="width:45%" />
 <img src="img/blank.png" />
+<notes>これは同じ施設で、ノイズ・ミュージックで有名な MERZBOW （メルツバウ）とコラボレーションしたときの映像ですね。 MERZBOW は、とにかくすごい強烈なノイズサウンドを作り出す方なので、映像の方もとにかく強烈なものになりました。さきほどのこれと比較すると、明滅の激しさが全然違いますよね。これは自分で操作していても頭がクラクラするような体験だったことを覚えています。</notes>
 </div>
 
 <div style="text-align: center">
@@ -101,33 +172,57 @@
 <img src="img/femm-1.gif" style="width:45%" />
 <img src="img/femm-2.gif" style="width:45%" />
 <img src="img/blank.png" />
+<notes>こちらは、さきほどのとは違って普通のライブハウスでのパフォーマンスになります。上は RHC という二人組の EDM アーティストとのコラボレーション、下は FEMM という、これもまた二人組の女性アーティストとのコラボレーションになります。これらのアーティストとはライブビジュアルの提供という形でよくコラボレーションを行ってます。</notes>
 </div>
 
-<div></div>
+<div>
+<notes>こんな感じでいろんなプロジェクトに関わっているのですが、それらの原動力となっているのが、テクノロジー、技術の存在です。僕は常に何らかのプロジェクトを始めるとき、そこで何か新しい技術を使ってみよう、新しい技術を試してみよう、と考えるようにしています。その新しい技術を試していく過程で、新しい可能性を見つけ出していき、表現として仕上げていく、というアプローチです。こうして口で言うと何か偉そうなことをやっているように聞こえてしまいますが、実際にやっているのはとても簡単なことです。</notes>
+<notes>ここでは、実際に私が関わった２つの事例を紹介しながら、その過程でどんなことを考えていたのか、どのようにして発想を膨らましていったのか、その背景を解説していきたいと思います。</notes>
+</div>
 
-<div>Getting artistic inspiration from technology</div>
+<div data-background-image="img/geometry-shader-fx-5.gif">
+Case 1. Geometry Shader Effects
+<notes>まず最初にお話しするのは、ジオメトリシェーダーを使ったエフェクトの事例です。</notes>
+<notes>この会場の中にも、 Unity のシェーダーを使ったことのある人は、少なからずいらっしゃると思います。でも、ジオメトリシェーダーを使ったことのある人というのは、なかなかいないかもしれませんね。このジオメトリシェーダーというのは、他のシェーダーと比較するとちょっとマイナーな機能なんですが、これを使うことでとても面白いエフェクトが作れるんです。その話をしたいと思います。</notes>
+</div>
 
-<div></div>
+<div>
+<img src="img/shader-stages-1.png" />
+<notes>まずはシェーダーの基礎についてのおさらいです。</notes>
+<notes>シェーダーを使ったことのある人ならば、まずバーテックスシェーダーというものがって、次にフラグメントシェーダーというものがあって……というような、基本的な構造を理解していると思います。この図ですね。</notes>
+</div>
 
-<div data-background-image="img/geometry-shader-fx-5.gif">Case 1. Geometry Shader Effects</div>
+<div>
+<img src="img/shader-stages-2.png" />
+<notes>で、実は、この図のここに、ジオメトリシェーダーというのを挟むことができるんです。じゃあ、ここに挟まったジオメトリシェーダー、一体どういう機能を持ったものなんだろう？という話になるのですが……まずはその前に、バーテックスシェーダーとフラグメントシェーダーの機能について復習しておきましょう。</notes>
+</div>
 
-<div><img src="img/shader-stages-1.png" /></div>
+<div>
+<img src="img/shader-stages-3.png" />
+<notes>ザクっと簡単に説明します。バーテックスシェーダーは頂点を処理するためのシェーダーです。 CPU から与えられたメッシュの各頂点に座標変換を適用します。頂点単位での簡単なライティングの計算などを行うこともあります。</notes>
+</div>
 
-<div><img src="img/shader-stages-2.png" /></div>
+<div>
+<img src="img/shader-stages-4.png" />
+<notes>フラグメントシェーダーはピクセルを処理するためのシェーダーです。いわゆるラスタライズの処理が行われた後に、画面上を１ピクセルずつ塗り潰していく処理が行われるのですが、ここで使われるのがフラグメントシェーダーです。画面上の１ピクセル１ピクセルそれぞれについて、どういう色で塗っていくのか決めるのが、このシェーダーです。ピクセルごとのライティング処理や、テクスチャマッピング処理などがここで行われます。</notes>
+</div>
 
-<div><img src="img/shader-stages-3.png" /></div>
+<div>
+<img src="img/shader-stages-5.png" />
+<notes>と、こんな形で頂点ごとの処理、ピクセルごとの処理が、各シェーダー内で行われるのですが……</notes>
+</div>
 
-<div><img src="img/shader-stages-4.png" /></div>
-
-<div><img src="img/shader-stages-5.png" /></div>
-
-<div><img src="img/shader-stages-6.png" /></div>
+<div>
+<img src="img/shader-stages-6.png" />
+<notes>ここに特殊なエフェクトを加えることもできます。例えば、</notes>
+</div>
 
 <div style="text-align: center">
 <img src="img/blank.png" />
 <img src="img/vertex-shader-fx-1.gif" style="width:45%" />
 <img src="img/vertex-shader-fx-2.gif" style="width:45%" />
 <img src="img/blank.png" />
+<notes>これは、バーテックスシェーダーの中で頂点の位置をいじくってみた例です。バーテックスシェーダーは頂点を処理するシェーダーなので、このように頂点の位置を変更して形状を変化させるようなエフェクトを作ることができるわけです。</notes>
 </div>
 
 <div style="text-align: center">
@@ -135,13 +230,24 @@
 <img src="img/fragment-shader-fx-2.gif" style="width:45%" />
 <img src="img/fragment-shader-fx-1.gif" style="width:45%" />
 <img src="img/blank.png" />
+<notes>これは、フラグメントシェーダーのエフェクトの例です。左のは、ピクセルの明るさが変化するアニメーションを与えたもの、右のは、一部分のピクセルを消すことによって物体が透けて見えるようにしたものですね。フラグメントシェーダーはピクセルを処理するシェーダーなので、このようにオブジェクトの一部分の色を変えたり消したりするエフェクトを作ることができるわけです。</notes>
 </div>
 
-<div><img src="img/shader-stages-7.png" /></div>
+<div>
+<img src="img/shader-stages-7.png" />
+<notes>整理しましょう。バーテックスシェーダーは、頂点を処理の単位としていました。細かい表現はできませんが、頂点の位置をいじって変形させるのとかは得意です。フラグメントシェーダーは、ピクセルを処理の単位としていました。変形などはできませんが、細かい模様の変化などは得意です。</notes>
+</div>
 
-<div><img src="img/shader-stages-8.png" /></div>
+<div>
+<img src="img/shader-stages-8.png" />
+<notes>そしてジオメトリシェーダーはと言うと……三角形を処理の単位とします。頂点１個１個でもなく、ピクセル１個１個でもなく、三角形を入力として受け取り、三角形を出力することを役割としています。ジオメトリシェーダーの中では、この三角形に対してエフェクトを加えることができます。</notes>
+<notes>では、三角形を処理の単位とすると、どんなエフェクトが作成可能でしょうか？</notes>
+</div>
 
-<div><img src="img/geometry-shader-fx-1.png" /></div>
+<div>
+<img src="img/geometry-shader-fx-1.png" />
+<notes>例えば、シェーダーに入力された三角形を変形してキューブにする、なんていうアイデアはどうでしょうか？ジオメトリシェーダーでは三角形の頂点の位置をずらすだけでなく、新しく三角形を追加することもできるので、三角形から四角形に変形したり、それに厚みを与えてキューブにする、なんてこともできるんです。</notes>
+</div>
 
 <div style="text-align: center">
 <img src="img/blank.png" />
@@ -150,6 +256,10 @@
 <img src="img/voxelizer-3.gif" style="width:45%" />
 <img src="img/voxelizer-4.gif" style="width:45%" />
 <img src="img/blank.png" />
+<notes>これが実際に、三角形をキューブに変形する、というアイデアをもとに作ってみた Voxelizer というエフェクトです。オブジェクトを異世界に転送するようなエフェクトですね。</notes>
+<notes>このように、２つの平面をパラメーターとして与えて、その平面に挟まれた部分の三角形について、先ほど説明したような、三角形からキューブへの変形処理を適用しています。</notes>
+<notes>実際には単純な変形ではなく、三角形のまま拡大してから、キューブに膨らんでいって、最後は縦に伸びて消える、というような、ちょっと複雑なアニメーションをしています。また、変形と同時に発光する処理を加えたり、キューブの形状を強調するためにワイヤフレームの表現を加えたりと、細かな見た目の装飾を行うことで、エフェクトとしての見た目の豪華さを出しています。発光の処理などはフラグメントシェーダーの中で行ってますので、ジオメトリシェーダーとフラグメントシェーダーの合わせ技、ということになりますね。</notes>
+<notes>こんな感じで、ジオメトリシェーダーという技術は、僕に新しい発想を与えてくれました。バーテックスシェーダーでウネウネと変形する、とか、フラグメントシェーダーでピカピカ光らす、とか以外に、物体の形状を分解して、ダイナミックに変形し、再構築する、ということを可能にしてくれたわけです。</notes>
 </div>
 
 <div style="text-align: center">
@@ -159,6 +269,8 @@
 <img src="img/gteleporter-1.gif" style="width:45%" />
 <img src="img/gteleporter-2.gif" style="width:45%" />
 <img src="img/blank.png" />
+<notes>同じように、三角形を分解し再構築する、という方向性で、いろんなエフェクトを作ってみました。上のは、三角形をキューブではなくリボン状の形状に変形させるものですね。物体が分解されていく様子がよく表現できていると思います。</notes>
+<notes>下のは、三角形を短いリボンに変形させてから、特定の座標に向かって移動させる、というものですね。このエフェクトを逆再生させたものと組み合わせることによって、物体が別の座標へ転送されたような表現を作り出すことができます。</notes>
 </div>
 
 <div style="text-align: center">
@@ -168,11 +280,19 @@
 <img src="img/geometry-shader-fx-6.gif" style="width:45%" />
 <img src="img/geometry-shader-fx-7.gif" style="width:45%" />
 <img src="img/blank.png" />
+<notes>こちらは Unity の新しいグラフィクス機能である HDRP と組み合わせて、いろいろ作ってみたものです。物体を四角形の破片に分解するエフェクト、物体を崩壊させて再構築するエフェクト、竜巻のような渦に変換するエフェクト、物体をスライスして消すエフェクト、などなど。</notes>
+<notes>このように、ジオメトリシェーダーを使うことで、これまでには作れなかったようなタイプのエフェクトを、いろいろと作れることが分かりました。こういう新しいもの発見をしたタイミングというのが、開発の中でいちばん楽しいですね。</notes>
 </div>
 
-<div><a href="https://github.com/keijiro/TestbedHDRP">github.com/keijiro/TestbedHDRP</a></div>
+<div>
+<a href="https://github.com/keijiro/TestbedHDRP">github.com/keijiro/TestbedHDRP</a>
+<notes>こちらの HDRP との組み合わせで作ったジオメトリシェーダーの実装例は、こちらのリポジトリで公開していますので、今日のある場合は覗いてみてください。</notes>
+</div>
 
-<div><a href="https://github.com/keijiro/StandardGeometryShader">github.com/keijiro/StandardGeometryShader</a></div>
+<div>
+<a href="https://github.com/keijiro/StandardGeometryShader">github.com/keijiro/StandardGeometryShader</a>
+<notes>また、 HDRP ではない、 Legacy render pipeline 上で実装したサンプルもこちらにあります。 HDRP との組み合わせは若干複雑なので、ジオメトリシェーダーに初めて触れるという場合は、こちらを一度見てみたほうが良いかもしれません。</notes>
+</div>
 
 <div style="text-align: center">
 <img src="img/blank.png" />
@@ -181,9 +301,13 @@
 <img src="img/geometry-shader-fx-10.gif" style="width:45%" />
 <img src="img/geometry-shader-fx-11.gif" style="width:45%" />
 <img src="img/blank.png" />
+<notes>こうして作成したエフェクトは実際のプロジェクトでも使用しました。上のは FEMM のビジュアルで使用した例ですね。下のはイベントで展示されたインスタレーションに使用した例です。ユーザーのアクションに合わせてモデルが切り替わるという、簡単な操作が組み込まれているんですが、こんな簡単な操作でも派手なエフェクトが発生すると、とても気持ちいいですね。</notes>
 </div>
 
-<div>Geometry Shader Instancing</div>
+<div>
+Geometry Shader Instancing
+<notes>ジオメトリシェーダーには、さらにもうひとつ面白い機能があります。 Geometry shader instancing と呼ばれるものです。簡単に説明すると、ジオメトリシェーダーを繰り返し実行するというものです。たったそれだけの機能ですが、これによって、大きな負荷をかけることなく、より複雑な形状を生み出せるようになります。</notes>
+</div>
 
 <div style="text-align: center">
 <img src="img/blank.png" />
@@ -192,6 +316,8 @@
 <img src="img/geometry-shader-instancing-3.gif" style="width:45%" />
 <img src="img/geometry-shader-instancing-4.gif" style="width:45%" />
 <img src="img/blank.png" />
+<notes>僕は、この geometry shader instancing を使えば、キャラクター１体の外見をまるまる生成することも可能ではないかと考えました。実際に試してみたのがこれです。</notes>
+<notes>シェーダーに入力しているのは、この左に見える、骨格を構成するラインの形状だけです。その単純なラインを、ジオメトリシェーダーを使って、ウネウネと動くリボンのような形状に変換しています。それをインスタンシングによって増殖させることで、このようにキャラクター１体をカバーする複雑な形状へと発展させているわけです。</notes>
 </div>
 
 <div style="text-align: center">
@@ -201,25 +327,54 @@
 <img src="img/geometry-shader-instancing-7.gif" style="width:45%" />
 <img src="img/geometry-shader-instancing-8.gif" style="width:45%" />
 <img src="img/blank.png" />
+<notes>このエフェクトも実際のプロジェクトで使用しています。これは RHC のイベントの VJ に使用したときの映像なのですが、 OLED を使った透過ディスプレイにこのエフェクトを映し出しています。このような透過ディスプレイは、コントラストの高い絵を使った方が綺麗に見えるということを経験的に知っていたので、このようなエフェクトを使ったのですが、まさにピッタリの組み合わせだったと思います。</notes>
 </div>
 
-<div><a href="https://github.com/keijiro/SkeletalGeometricEffects">github.com/keijiro/SkeletalGeometricEffects</a></div>
+<div>
+<a href="https://github.com/keijiro/SkeletalGeometricEffects">github.com/keijiro/SkeletalGeometricEffects</a>
+<notes>この geometry shader instancing の例は、こちらのリポジトリで公開していますので、興味のある場合はこちらを覗いてみてください。</notes>
+</div>
 
-<div></div>
+<div>
+<notes>おさらいをしましょう。</notes>
+</div>
 
-<div><img src="img/shader-stages-8.png" /></div>
+<div>
+<img src="img/shader-stages-8.png" />
+<notes>バーテックスシェーダー、ジオメトリシェーダー、フラグメントシェーダーには、それぞれ異なった役割があり、それぞれ異なる種類の要素を入力し、出力します。</notes>
+<notes>バーテックスシェーダーなら頂点をいじることできる、フラグメントシェーダーならピクセルをいじることができる。それぞれ異なる表現が可能でした。そして、ジオメトリシェーダーでは三角形をいじることができる。そこからどんな表現が可能だろう？そう考えたところから、新しい可能性が広がっていきました。まさにインスピレーションを受けた瞬間が、そこにあります。</notes>
+</div>
 
-<div></div>
+<div>
+<notes>このように、ちょっとした機能の違い、役割の違いが、異なった表現の可能性を与えると言うことは、新しい技術を触っていると度々起こります。ですから、何か新しい技術や機能が現れた時に、とにかくまずそれに触れてみて、何ができるのか確かめてみると言うのは、とても大切な姿勢であると僕は思います。</notes>
+</div>
 
-<div data-background-image="img/pix2pix-title.gif">Case 2. Deep Learning (Neural VFX with pix2pix)</div>
+<div data-background-image="img/pix2pix-title.gif">
+Case 2. Deep Learning (Neural VFX with pix2pix)
+<notes>次は、ディープラーニングをビジュアルエフェクトに使ってみたという事例です。</notes>
+<notes>ディープラーニングや機械学習は、現在日本でも最も人気のある研究分野の一つです。ただこれについては、中国の方がもっと熱いかもしれませんね。みなさんの中にも機械学習の技術を実際に使っている人がいるかもしれません。あるいは、機械学習についてこれから勉強してみたいと考えてる人もいるかもしれません。</notes>
+<notes>僕も機械学習の技術を何かしらビジュアルエフェクトに使ってみたいと考えていたのですが、なかなかきっかけが掴めないでいました。</notes>
+</div>
 
-<div>pix2pix <a href="https://phillipi.github.io/pix2pix/">phillipi.github.io/pix2pix</a></div>
+<div>
+pix2pix <a href="https://phillipi.github.io/pix2pix/">phillipi.github.io/pix2pix</a>
+<notes>そんな時に、ふとしたきっかけで出会ったのが、 pix2pix と呼ばれる技術でした。</notes>
+</div>
 
-<div><img src="img/pix2pix-1.png" /></div>
+<div>
+<img src="img/pix2pix-1.png" />
+<notes>pix2pix は、ある種類の画像を、別のある種類の画像に変換するというディープ・ニューラルネットワークの一種です。</notes>
+</div>
 
-<div><img src="img/pix2pix-2.png" /></div>
+<div>
+<img src="img/pix2pix-2.png" />
+<notes>pix2pix の使用例として有名なのが、この、線画のスケッチをリアルな猫の画像に変換するというデモです。ウェブブラウザ上で試すことのできるデモが有名になりました。これを実際に遊んでみたことのある人もいるのではないかと思います。</notes>
+</div>
 
-<div><img src="img/pix2pix-3.png" /></div>
+<div>
+<img src="img/pix2pix-3.png" />
+<notes>これは実際の使用例を画像検索で拾ってきたものなんですが……まあ真面目に猫を描いて試してる人もいれば、ぜんぜん関係無いものを描いてる人もいますね。ぜんぜん関係無いものを描いても、無理やり猫っぽいものに変換してくれる、というところに、今までの技術には無かった新しさがあると思います。不思議な人間臭さというか、知性のかけらのようなものが、そこに感じられるんですよね。</notes>
+</div>
 
 <div style="text-align: center">
 <img src="img/blank.png" />
@@ -228,19 +383,49 @@
 <img src="img/cat-a2b-3.png" style="width:45%" />
 <img src="img/cat-a2b-4.png" style="width:45%" />
 <img src="img/blank.png" />
+<notes>この、線画をリアルな猫に変換するというモデルは、このように「線画の画像データ」と「猫の写真の画像データ」のペアを大量に用意し、それを学習させることによって実現されています。</notes>
 </div>
 
-<div><img src="img/pix2pix-5.png" /></div>
+<div>
+<img src="img/pix2pix-5.png" />
+<notes>同じ要領で画像のペアを大量に用意すれば、別の使い方も可能です。これは色を使った単純な塗り潰しの画像から、リアルな街の風景を生成するモデルですね。これは航空写真から地図を生成するモデル。これはリアルな建物を生成するモデル。これは白黒写真に色を付けるモデル。これは昼間の写真を夜に変換するモデルですね。などなど。何か決まり切った特定の用途だけでなく、データさえ用意できれば様々な種類の問題に適用できるというのが、機械学習の素晴らしいところです。</notes>
+</div>
 
-<div><img src="img/unity-pix2pix-1.png" /></div>
+<div>
+<notes>この pix2pix は、それなりに処理負荷の高いニューラルネットワークなのですが、どうやら最新の GPU を最大限に利用すれば、リアルタイムに動かすことも可能らしい、という話を耳にしました。もしこれを Unity 上でリアルタイムに動かすことができれば、これまでにない、劇的に見た目を変化させるようなエフェクトを作ることができるかもしれない……と、僕は考えました。</notes>
+</div>
 
-<div><img src="img/unity-pix2pix-2.png" /></div>
+<div>
+<img src="img/unity-pix2pix-1.png" />
+<notes>そこでまず、前の猫のデモを、単純に Unity 上の C# スクリプトで実装してみることにしました。いちおう動くことには動いたのですが、一枚の絵の変換に５分ぐらいかかるという、非常に低速なものでした。この時点では、まだ実用的ではないですね。</notes>
+<notes>ただ、これを実装した時点で、ディープニューラルネットワークの仕組みは非常に単純なものであるというのが分かったので、最終的には何とかなるだろうという自信が出てきました。簡単に言ってしまえば、ディープニューラルネットワークとは、膨大な数の掛け算と足し算をひたすら繰り返しているだけです。掛け算と足し算の得意な GPU を使って最適化すれば、大幅に高速化することができるはず……と考えたわけです。</notes>
+</div>
 
-<div><img src="img/unity-pix2pix-4.png" /></div>
+<div>
+<img src="img/unity-pix2pix-2.png" />
+<notes>で、まずは単純に GPU 化してみました。左のがそれなんですが、これだけで約３秒まで高速化されています。５分から３秒まで縮まったんだから、すごいですよね。さすが GPU です。</notes>
+<notes>その後、細かな最適化のテクニックを加えていって、最終的には0.04秒にまで高速化することができました。ここまでくれば、もうリアルタイムに動いたと言ってもいいでしょう。</notes>
+</div>
 
-<div><video src="video/pix2pix-sketchpad.mp4" controls autoplay loop /></div>
+<div>
+<img src="img/unity-pix2pix-4.png" />
+<notes>ちなみに、どういう高速化のテクニックを使ったのか、ここで詳しくは説明しませんが、資料だけ紹介しておきたいと思います。これは NVIDIA による Direct Compute を使った際の最適化のテクニックについて解説したスライドです。ここで紹介されているようなテクニックを中心に最適化を施して行きました。興味のある方はこちらを参照してみてください。</notes>
+</div>
 
-<div><a href="https://github.com/keijiro/pix2pix">github.com/keijiro/pix2pix</a></div>
+<div>
+<video src="video/pix2pix-sketchpad.mp4" controls autoplay loop />
+<notes>リアルタイムに動かすことができるようになったので、さっそくインタラクティブなデモを作成してみました。基本的にはウェブブラウザ上で動いていたデモと同じですが、こちらは線画を描くのとほぼ同時に結果を見ることができるようになっていて、インタラクティブ性が向上しています。</notes>
+<notes>自分の描いた絵がリアルタイムに変化するのを見るというのは、なかなか新しい体験です。強力な GPU を持っている方は、ぜひ実際に自分の手で試してみてください。</notes>
+</div>
+
+<div>
+<a href="https://github.com/keijiro/pix2pix">github.com/keijiro/pix2pix</a>
+<notes>このデモはこちらの GitHub のリポジトリに上げてありますので、実際に試してみたいという方は、こちらを覗いてみてください。</notes>
+</div>
+
+<div>
+<notes>pix2pix のランタイム部分がリアルタイムに動くようになったので、次は新しいモデルの学習に挑戦してみることにしました。学習については Unity 上ではなく Google の Colaboratory というサービスを使ってクラウド上で動かすことにしました。</notes>
+</div>
 
 <div style="text-align: center">
 <img src="img/blank.png" />
@@ -261,6 +446,7 @@
 <img src="img/pix2pix-examples-4-3.png" style="width:23%" />
 <img src="img/pix2pix-examples-4-4.png" style="width:23%" />
 <img src="img/blank.png" />
+<notes>それで、いろんなモデルを自作してみたのですが、自分でも猫のモデルを作成してみたり、同じ要領で犬のモデルを作成してみたりしました。人の顔なんかも試してみました。完全ではないですが、それなりに人の顔の形状を捉えていることがわかりますね。最後のは、イラスト素材集を学習させて、線画からイラスト風の画像を生成できるようにしたものです。</notes>
 </div>
 
 <div style="text-align: center">
@@ -269,17 +455,37 @@
 <img src="img/pix2pix-postprocess2.gif" style="width:25%" />
 <img src="img/pix2pix-postprocess3.gif" style="width:50%" />
 <img src="img/blank.png" />
+<notes>ここまでのデモは、人の手で書いた線画を変換するものでしたが、 Unity でレンダリングした絵も同じように変換することができるのではないか？と考えて、次に作ってみたのがこのデモです。 Unity でレンダリングした画像を線画に変換し、そこから pix2pix で最終的な画像を生成しています。</notes>
+<notes>こう、言葉で表すとなんとなく上手くいきそうなアイデアなんですが、実際に試すとグチャグチャとした絵が生まれるばかりで、なかなかうまくいかなかったです。ただ、普通の人間の感性では生まれてこないような絵が、機械から生み出されてくるというのは、なかなか面白いですね。この胸像を無理やり猫に変換する例などは、まるで悪夢か幻覚か見ているような感じです。</notes>
+<notes>下の例は、猫の３Dモデルのアニメーションをリアルな猫に変換する、というのに挑戦してみたもので、これはなかなかうまくいっていると思います。もしかしたらこの手法に実用性があるのかもしれない、と感じさせてくれます。</notes>
 </div>
 
-<div>pix2pix Next Frame Prediction</div>
+<div>
+pix2pix Next Frame Prediction
+<notes>次は、さらに別の pix2pix の応用を試してみることにしました。 pix2pix を next frame prediction 、つまり、あるフレームの次のフレームを予測するためのモデルとして使用する、というものです。</notes>
+</div>
 
-<div><img src="img/pix2pix-nfp-1.png" /></div>
+<div>
+<img src="img/pix2pix-nfp-1.png" />
+<notes>仕組みについて簡単に説明します。まずは任意のビデオをフレームに分解します。いわゆるイメージ・シーケンスですね。そして、連続する２つのフレームをペアにして、 pix2pix に学習させます。こうして出来たモデルは、任意の画像を与えると、その次のフレームを予測して生成してくれる、というものになります。</notes>
+</div>
 
-<div><img src="img/pix2pix-nfp-2.png" /></div>
+<div>
+<img src="img/pix2pix-nfp-2.png" />
+<notes>あるフレームを pix2pix に与えると、次のフレームを作ってくれる。そのフレームを再び pix2pix に与えると、次の次のフレームを作ってくれる。それをまた pix2pix に与えて……というようにフィードバックを繰り返すことで、無限に続くアニメーションが生成できるのです。</notes>
+</div>
 
-<div><video src="video/pix2pix-nfp-1.mp4" controls autoplay loop /></div>
+<div>
+<video src="video/pix2pix-nfp-1.mp4" controls autoplay loop />
+<notes>このアイデアはもともと、ディープラーニングを使ったアート作品で有名な Mario Klingemann 氏が実験していたものです。これは花火の映像を学習させたモデルですね。リアルな映像を生成できているわけではありませんが、予測できない絵が無限に生み出されていく様子がとても面白いと思いました。</notes>
+</div>
 
-<div><img src="img/pix2pix-nfp-3.png" /></div>
+<div>
+<img src="img/pix2pix-nfp-3.png" />
+<notes>このモデルの面白いところは、元の映像とは何にも関係無い画像を与えたとしても、それを無理やり映像として解釈して次を予測してしまうというところです。</notes>
+<notes>例えば、さきほどの花火の映像を生成するモデル、ここに花火とは何の関係もない人の顔の写真を与えたとします。そうすると、人の顔を無理やり花火として解釈して、花火の動きへと繋げていってくれるのです。</notes>
+<notes>このように、ある画像に本来とは異なる解釈を与えて加工していくというのは、今までは人間にしかできなかった仕事です。それを機械的に実現することができて、しかもリアルタイムで動くというのは、とても新しい可能性であると思いました。</notes>
+</div>
 
 <div style="text-align: center">
 <img src="img/blank.png" />
@@ -292,12 +498,18 @@
 <img src="img/pix2pix-nfp-examples-6.gif" style="width:23%" />
 <img src="img/pix2pix-nfp-examples-8.gif" style="width:23%" />
 <img src="img/blank.png" />
+<notes>これは実際に僕が作ってみたモデルを動かしたものになります。この水面の映像や、海の波の映像などは、かなりリアルに再現できていることが分かりますね。初期状態として画像を一枚与えているだけなんですが、そこから無限に続く映像を作ってくれます。</notes>
+<notes>左上のは、電車が先頭にカメラを置いて録った映像を学習させたものになります。これはまったくリアルではありませんが、動きの特徴を捉えて無理やり再現しようとしている様子が面白いと思いました。</notes>
+<notes>これは爆発の映像、これは花火の映像、これは色のついた煙が混ざり合う映像ですね。どれもリアルというわけではないのですが、動きの特徴を捉えて映像にできているのが面白いです。</notes>
+<notes>最も奇妙な結果を得られたのが右端の例です。これはダンサーが踊っている映像を学習させたものなのですが、なんだか得体のしれないモヤモヤを生成し続けるモデルになりました。こういう、何の絵なのか分かりそうで分からない状態を作り出せるのも面白いです。</notes>
 </div>
 
 <div style="text-align: center">
 <div><img src="img/blank.png" /></div>
 <div><video src="video/ngx-1.mp4" style="width:33%" controls autoplay loop /></div>
 <div><img src="img/blank.png" /></div>
+<notes>こうして作ったモデルをリアルタイムに操作して、ライブビジュアルとして使えるシステムを構築してみました。スライダー操作によって２つのモデルを混ぜ合わせて繋いだり、ノイズを混ぜることで映像に不規則な変化を与えたりすることができるようになっています。</notes>
+<notes>このようにインタラクティブなインターフェースを作ることで、人間の感性とか、人の手の動きとか、そういった複雑製をこのシステムの中に組み込むことができます。そうすることで、単に映像を無限に作り出す装置ではなく、ライブビジュアルのための表現の装置として使うことが可能になるわけです。</notes>
 </div>
 
 <div style="text-align: center">
@@ -305,15 +517,34 @@
 <img src="img/ngx-brdg-1.gif" style="width:45%" />
 <img src="img/ngx-brdg-2.gif" style="width:45%" />
 <img src="img/blank.png" />
+<notes>実際にライブパフォーマンスの中で使ってみた映像です。音楽に合わせて手動で映像を操作しています。僕が AI を使ったアートとしてイメージしていたのはまさにこのような感じで、 AI が全自動で何かを生成するのではなく、人間による操作の先に AI が存在している、と言う構図です。</notes>
+<notes>これは実際に操作してみると分かるのですが、スライダーを手で動かすだけで、画面上の絵が無限に変化していく……というこの体験は、とてもユニークで、奇妙かつ面白いものです。このような簡単な操作系で pix2pix を制御することができる、と発見できたのは、このプロジェクトの最大の成果かもしれません。</notes>
 </div>
 
-<div><a href="https://github.com/keijiro/Ngx/">github.com/keijiro/Ngx</a></div>
+<div>
+<a href="https://github.com/keijiro/Ngx/">github.com/keijiro/Ngx</a>
+<notes>このプロジェクトはこちらの GitHub のリポジトリで公開していますので、興味のある場合は覗いてみてください。</notes>
+</div>
 
-<div></div>
+<div>
+<notes>さて、そろそろおさらいをしましょう。この事例を通して伝えたかったことは２つあります。</notes>
+</div>
 
-<div>Find a way to learn a new technology</div>
+<div>
+Find a way to learn a new technology
+<notes>まず最初は、新しい技術を学ぶ方法についてです。僕は以前から機械学習の技術を勉強してみたい、機械学習の技術を自分で使ってみたい、と考えていました。ですが、なかなかその機会をつかめずにいました。</notes>
+<notes>それが、 pix2pix という技術と出会ったことによって、一気に道が開けていきました。それは、 pix2pix が、僕が活動している分野……コンピューターグラフィックスとかビジュアルエフェクトとかですね、それらとの接点を多く持っていたからです。僕が元から持っている知識や経験を生かして、勉強を効率的に進めることができたのです。また、僕が普段やっていることにすぐ活用できたので、やる気を維持しやすかった、というのもあります。</notes>
+<notes>このように、なかなか勉強することのできなかった技術について、自分と身近な部分での接点を得たことによって、一気に自分のものになっていく……というこの流れ、僕は何度も経験したことがあります。</notes>
+<notes>ここにいる皆さんもそれぞれ、本当は勉強してみたいと思っていることがあるんだけれど、なかなか手をつけることができない……そんな悩みを、なにかしら持っているんじゃないでしょうか。</notes>
+<notes>そういったときに、いきなり分厚い教科書を買って、最初から最後まで読んでみようとしても、なかなかうまくいきません。自分の知識や経験、自分の活動との接点を見つけ、まずはその領域から自分のものにしていく……これは新しい技術を学ぶ際に使える、強力な戦略のひとつです。</notes>
+</div>
 
-<div>Neural VFX can be realtime!</div>
+<div>
+Neural VFX can be realtime!
+<notes>もう一つ伝えたかったのは、機械学習技術を使ったビジュアルエフェクトがリアルタイムに動くということ。そういう時代が既に来ているということです。機械学習を使った画像処理と言うと、研究論文では高スペックなシステムを用意してオフラインで動かすことが多いです。そのため、それがどこまで実用的な技術であるのかなかなか想像しにくいです。</notes>
+<notes>僕は今回、 pix2pix の最適化に取り組んだことによって、これが既に実用的な技術であるという確信を得ました。特別なシステムを用意しなくとも、そこそこのスペックのコンピューターであれば、そこそこの速度で動いてくれます。今後 GPU のスペックが進化を続ければ、それは更に扱いやすいものになるでしょう。</notes>
+<notes>この、機械学習を使ったビジュアルエフェクトという分野には、新しい可能性がまだまだたくさん存在しています。もし、今日この話を聞いて面白そうだと思ったならば、ぜひこの新しい分野に挑戦してみてください。新しい才能がここに現れることを世界は期待していると思います。</notes>
+</div>
 
 <div></div>
 
