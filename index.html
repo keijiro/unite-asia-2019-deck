@@ -46,15 +46,23 @@ Getting artistic inspiration from technology
 </div>
 
 <div>
-<notes>ちょっとツールを立ち上げましょう。これは RealSense SDK に付属のツールですが……このように普通に平面の絵が撮れるだけでなく……このように奥行きを持った３Ｄのボリュームデータとして映像を取得できます。精度は完璧ではありませんが、こんなに小さなデバイスで簡単に３Ｄのボリュームデータが取れるため、とても重宝しています。</notes>
-<notes>そして、もうひとつの技術、  VFX Graph ですが、これは現在開発中の、 Unity の新しいエフェクトシステムです。ちょっと立ち上げてみましょう。</notes>
+<img src="img/blank.png" />
+<img src="img/realsense-1.gif" style="width:45%" />
+<img src="img/realsense-2.gif" style="width:45%" />
+<img src="img/blank.png" />
+<notes>これは RealSense SDK に付属のツール画面です。このように普通に平面の絵が撮れるだけでなく、このように三次元的な奥行きを持った３Ｄのボリュームデータとして映像を取得できます。精度は完璧ではありませんが、こんなに小さなデバイスで簡単に３Ｄのボリュームデータが取れるため、とても重宝しています。</notes>
+</div>
+
+<div>
+<img src="img/vfx-graph-1.png" />
+<notes>そして、もうひとつの技術、 VFX Graph ですが、これは現在開発中の、 Unity の新しいエフェクトシステムです。</notes>
 <notes>これが VFX Graph を編集するためのツール、 VFX Editor の画面です。こんな感じで、ノードを線で繋いでいき、グラフを構築することでエフェクトをデザインできます。こうして作られたエフェクトは GPU を使って実行されるため、パフォーマンスも非常に優れています。従来のパーティクルシステムと比較して、使いやすいだけでなく性能も良いという優れものです。</notes>
 <notes>今回新たに作ったのは、この RealSense から得た３Ｄのボリュームデータを VFX Graph に入力するための仕組みです。どのように実現しているのか、簡単に説明します。</notes>
 </div>
 
 <div>
 <img src="img/rsvfx-1.png" />
-<notes>VFX Graph には、テクスチャに焼き込まれた、いわゆる「ベイク」された、位置や色の情報を適用するためのノードが用意されています。この “Set Position from Map” や “Set Color from Map” がそれです。この仕組みを使うことで、大量の位置や色の情報を、テクスチャ、いわゆるアトリビュートマップを経由して、エフェクトで使うことができるわけです。</notes>
+<notes>VFX Graph には、テクスチャに焼き込まれた、いわゆる「ベイク」された、位置や色の情報を使うためのノードが用意されています。この “Set Position from Map” や “Set Color from Map” がそれです。この仕組みを使うことで、大量の位置や色の情報を、テクスチャ、いわゆるアトリビュートマップを経由して、エフェクトで使うことができるわけです。</notes>
 </div>
 
 <div>
@@ -65,8 +73,6 @@ Getting artistic inspiration from technology
 <div>
 <a href="https://github.com/keijiro/Rsvfx">github.com/keijiro/Rsvfx</a>
 <notes>この仕組みを使ったサンプルプロジェクトを、こちらの GitHub のリポジトリで公開していますので、詳細について興味のある場合は、こちらを参照してみてください</notes>
-<notes>ちょっと実際に動かしてみましょう。</notes>
-<notes>試しに作ってみたエフェクトが色々入ってるんですが……こんな感じでパーティクルを発生させたり……こんな感じでラインを発生させたり……いろんなエフェクトを簡単に組むことができます。ぜひ試してみてください。</notes>
 </div>
 
 <div>
@@ -83,6 +89,8 @@ Getting artistic inspiration from technology
 Data visualization
 <notes>とにかく何でも、大量のデータを Unity に取り込んで視覚化、いわゆるデータ・ビジュアライゼーションを行いたいという場合に、このアプローチは役に立ちます。エフェクトアーティストだけでなく、データの視覚化に Unity を使いたいと考えてる人にも、この VFX Graph は、ぜひ使ってみて欲しい機能だと思います。</notes>
 </div>
+
+<!--
 
 <div>
 <notes>もう一つ、今回のデモで使っていた要素があります。それは「音」です。</notes>
@@ -134,6 +142,8 @@ Data visualization
 <ul><li>Intel RealSense D415</li><li>GeChic On-Lap 1503I</li></ul>
 <notes>ちなみに、今回使っていたデバイスの型番を参考までに紹介しておきます。 RealSense カメラは D415 というモデルです。 FOV (Field Of View) が狭いのですが、そのぶん画質は他のモデルよりも高めになっています。なので今回のようなビジュアルエフェクトに使うには、これがおすすめです。タッチスクリーンは GeChic の On-Lap 1503I です。軽くて持ち運びやすいので重宝しています。</notes>
 </div>
+
+-->
 
 <div>
 <notes>デモンストレーションについての解説は以上です。そろそろ本題に入りましょう。まずは自己紹介から。</notes>
