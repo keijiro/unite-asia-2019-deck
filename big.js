@@ -318,7 +318,7 @@ window.addEventListener("load", function() {
           break;
         }
       }
-      slideDiv.style.fontSize = Math.min(height / 6, fontSize) + "px";
+      slideDiv.style.fontSize = Math.min(height / 10, fontSize) + "px";
       fontSize += step;
     });
   }
