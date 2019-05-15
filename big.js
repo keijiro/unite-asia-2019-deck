@@ -198,7 +198,7 @@ window.addEventListener("load", function() {
       notes[n].forEach(function(note) {
         console.log(
           "%c%s",
-          "padding:5px;font-family:serif;font-size:18px;line-height:150%;",
+          "padding:5px;font-family:serif;font-size:30px;line-height:150%;",
           note
         );
       });
