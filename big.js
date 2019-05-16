@@ -194,11 +194,12 @@ window.addEventListener("load", function() {
    */
   function printNotesToConsole(n) {
     if (notes[n].length && "group" in console) {
+      console.log("\n\n\n\n");
       console.group(n);
       notes[n].forEach(function(note) {
         console.log(
           "%c%s",
-          "padding:5px;font-family:serif;font-size:30px;line-height:150%;",
+          "padding:5px;font-family:serif;font-size:25px;line-height:150%;",
           note
         );
       });
